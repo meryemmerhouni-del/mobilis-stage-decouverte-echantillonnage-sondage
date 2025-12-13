@@ -1,0 +1,85 @@
+.logo {
+  width: 200px; /* Ajustez la largeur selon vos besoins */
+  margin: 0 auto 20px auto; /* Centrer le logo et ajouter un espacement en bas */
+  display: block;
+}
+.header img {
+  width: 400px; /* Augmenter la taille du logo */
+  padding: 40px; /* Ajouter plus d'espace autour du logo */
+  margin-bottom: 40px; /* Ajuster l'espacement sous le logo */
+  background-color: white; /* (Optionnel) Ajouter un fond clair si nécessaire */
+  border-radius: 10px; /* (Optionnel) Arrondir les coins */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  color: #2e7d32;
+  margin-bottom: 20px;
+}
+
+.upload-form input,
+.upload-form button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.upload-form button {
+  background-color: #2e7d32;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-form button:hover {
+  background-color: #1e5631;
+}
+
+.download-section {
+  margin-top: 20px;
+}
+
+.download-link {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #007bff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.download-link:hover {
+  background-color: #0056b3;
+}
+
+.logout-link {
+  display: block;
+  margin-top: 20px;
+  color: #2e7d32;
+  text-decoration: none;
+}
+
+.logout-link:hover {
+  text-decoration: underline;
+}

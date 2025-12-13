@@ -1,0 +1,259 @@
+{% block content %}
+<style>
+  /* Styling for the dashboard container */
+  .dashboard-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+
+  .dashboard-container h2 {
+    color: #2e7d32;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  .dashboard-container p {
+    font-size: 1rem;
+    color: #555;
+    margin: 10px 0;
+  }
+
+  /* Form styles */
+  .upload-form {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+
+  /* Submit button styles */
+  button[type="submit"] {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #1b5e20;
+  }
+
+  /* Download section */
+  .download-section {
+    margin-top: 20px;
+    padding: 10px;
+    background: #e8f5e9;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .download-link {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+
+  .download-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Logout link */
+  .logout-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #d32f2f;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .logout-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="dashboard-container">
+  <!-- Dashboard header -->
+  <h2>Welcome, {{ user }}</h2>
+  <p>Upload an Excel file for sampling and specify your filters:</p>
+
+  <!-- Upload form -->
+  <form action="/dashboard" method="POST" enctype="multipart/form-data" class="upload-form">
+    <div class="form-group">
+      <label for="file">Select File:</label>
+      <input type="file" id="file" name="file" accept=".xls,.xlsx" required />
+    </div>
+
+    <div class="form-group">
+      <label for="num_samples">Number of Samples:</label>
+      <input type="number" id="num_samples" name="num_samples" placeholder="Enter number of samples" min="1" required />
+    </div>
+
+    <!-- Gender percentages -->
+    <div class="form-group">
+      <label for="gender-percentages">Gender Percentages:</label>
+      <div id="gender-section">
+        <div>
+          <label>Homme:</label>
+          <input type="number" name="gender_percentages" placeholder="Enter percentage for Homme" min="0" max="100" required />
+        </div>
+        <div>
+          <label>Femme:</label>
+          <input type="number" name="gender_percentages" placeholder="Enter percentage for Femme" min="0" max="100" required />
+        </div>
+      </div>
+    </div>
+
+    <!-- Technology percentages -->
+    <div class="form-group">
+      <label for="technology-percentages">Technology Percentages:</label>
+      <div id="technology-section">
+        <div>
+          <label>2G:</label>
+          <input type="number" name="technology_percentages" placeholder="Enter percentage for 2G" min="0" max="100" required />
+        </div>
+        <div>
+          <label>3G:</label>
+          <input type="number" name="technology_percentages" placeholder="Enter percentage for 3G" min="0" max="100" required />
+        </div>
+        <div>
+          <label>4G:</label>
+          <input type="number" name="technology_percentages" placeholder="Enter percentage for 4G" min="0" max="100" required />
+        </div>
+      </div>
+    </div>
+
+    <!-- Wilayas selection -->
+    <div class="form-group">
+      <label for="wilayas">Wilayas:</label>
+      <select id="wilayas" name="wilayas" multiple>
+        {% for wilaya in [
+          "TOUGGOURT", "Tlemcen", "Tizi Ouzou", "Tissemsilt", "Tipaza", "Tindouf",
+          "TIMIMOUN", "Tiaret", "Tébessa", "Tamanrasset", "Souk Ahras", "Skikda",
+          "Sidi Bel Abbès", "Sétif", "Saïda", "Relizane", "Oum El Bouaghi", 
+          "OULED DJELLAL", "Ouargla", "Oran", "Naâma", "M'Sila", "Mostaganem", 
+          "Mila", "MENIAA", "Médéa", "Mascara", "Laghouat", "Khenchela", 
+          "Jijel", "IN SALAH", "IN GUEZZAM", "Illizi", "Guelma", "Ghardaïa", 
+          "El Tarf", "El Oued", "EL MEGHAIER", "El Bayadh", "Djelfa", "DJANET", 
+          "Constantine", "Chlef", "Boumerdès", "Bouira", "Bordj Bou Arreridj", 
+          "BORDJ BADJI MOKHTAR", "Blida", "Biskra", "BENI ABBES", "Béjaïa", 
+          "Béchar", "Batna", "Annaba", "Alger", "Aïn Témouchent", "Aïn Defla", 
+          "Adrar"
+        ] %}
+        <option value="{{ wilaya }}">{{ wilaya }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    
+     <!-- Offers -->
+    <div id="offers-section" class="form-group">
+      <label for="offers">Offers:</label>
+      <div>
+        <select name="offers">
+          {% for offer in [
+            "Win Control 1300DA 4GNV_DSI", "Mobtasim PixX 4G DSA", "Top 500 and Top 2000 4G",
+            "Mobtasim 4G", "Sama", "Sama Control 1500", "Convention Control AT 4G",
+            "Win Control 1300 4G", "Win Libre 1300 4G", "Convention Win Libre 650 4G",
+            "Convention Win Libre MDN 4G", "Sama Libre 1500", "Convention Control DGSN 4G",
+            "Convention Control MDN 4G", "Convention Win Libre Douane", "Premium 8 Heures",
+            "Awel Tous_4G", "Win Control 2000 4G", "Sama Control 2000", "Convention Win Libre DGSN 4G"
+          ] %}
+          <option value="{{ offer }}">{{ offer }}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="percentages" placeholder="Percentage" min="1" max="100" required />
+      </div>
+      <button type="button" id="add-offer" onclick="addOfferField()">+ Add Offer</button>
+    </div>
+
+
+    <!-- Submit button -->
+    <button type="submit">Process File</button>
+  </form>
+
+  <!-- Download section -->
+  {% if file_url %}
+  <div class="download-section">
+    <p>Download your processed file:</p>
+    <a href="/download/{{ file_url }}" class="download-link">Download Sampled File</a>
+  </div>
+  {% endif %}
+
+  <!-- Logout -->
+  <a href="/logout" class="logout-link">Log Out</a>
+</div>
+<script>
+  // Add dynamic offer fields
+  function addOfferField() {
+    const section = document.getElementById("offers-section");
+
+    // Créer un conteneur pour la nouvelle offre
+    const offerGroup = document.createElement("div");
+    offerGroup.innerHTML = `
+      <select name="offers">
+        <option value="Win Control 1300DA 4GNV_DSI">Win Control 1300DA 4GNV_DSI</option>
+        <option value="Mobtasim PixX 4G DSA">Mobtasim PixX 4G DSA</option>
+        <option value="Top 500 and Top 2000 4G">Top 500 and Top 2000 4G</option>
+        <option value="Mobtasim 4G">Mobtasim 4G</option>
+        <option value="Sama">Sama</option>
+        <option value="Sama Control 1500">Sama Control 1500</option>
+        <option value="Convention Control AT 4G">Convention Control AT 4G</option>
+        <option value="Win Control 1300 4G">Win Control 1300 4G</option>
+        <option value="Win Libre 1300 4G">Win Libre 1300 4G</option>
+        <option value="Convention Win Libre 650 4G">Convention Win Libre 650 4G</option>
+        <option value="Convention Win Libre MDN 4G">Convention Win Libre MDN 4G</option>
+        <option value="Sama Libre 1500">Sama Libre 1500</option>
+        <option value="Convention Control DGSN 4G">Convention Control DGSN 4G</option>
+        <option value="Convention Control MDN 4G">Convention Control MDN 4G</option>
+        <option value="Convention Win Libre Douane">Convention Win Libre Douane</option>
+        <option value="Premium 8 Heures">Premium 8 Heures</option>
+        <option value="Awel Tous_4G">Awel Tous_4G</option>
+        <option value="Win Control 2000 4G">Win Control 2000 4G</option>
+        <option value="Sama Control 2000">Sama Control 2000</option>
+        <option value="Convention Win Libre DGSN 4G">Convention Win Libre DGSN 4G</option>
+      </select>
+      <input type="number" name="percentages" placeholder="Percentage" min="1" max="100" required />
+    `;
+
+    // Ajouter le groupe de champs avant le bouton "Add Offer"
+    section.insertBefore(offerGroup, document.getElementById("add-offer"));
+  }
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}
